@@ -1,0 +1,31 @@
+{
+    "name": "thecodingmachine/dbal-fluid-schema-builder",
+    "description": "Build and modify your database schema using Doctrine DBAL and a fluid syntax.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "David Négrier",
+            "email": "d.negrier@thecodingmachine.com"
+        }
+    ],
+    "require": {
+        "doctrine/dbal": "^2.0",
+        "doctrine/inflector": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.1",
+        "satooshi/php-coveralls": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "TheCodingMachine\\FluidSchema\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TheCodingMachine\\FluidSchema\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
