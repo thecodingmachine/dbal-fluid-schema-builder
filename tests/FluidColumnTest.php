@@ -49,11 +49,6 @@ class FluidColumnTest extends TestCase
         $column->guid();
         $this->assertSame(Type::getType(Type::GUID), $dbalColumn->getType());
 
-        $column->binary(43);
-        $this->assertSame(Type::getType(Type::BINARY), $dbalColumn->getType());
-        $this->assertSame(43, $dbalColumn->getLength());
-        $this->assertSame(false, $dbalColumn->getFixed());
-
         $column->blob();
         $this->assertSame(Type::getType(Type::BLOB), $dbalColumn->getType());
 
@@ -83,6 +78,13 @@ class FluidColumnTest extends TestCase
 
         $column->object();
         $this->assertSame(Type::getType(Type::OBJECT), $dbalColumn->getType());
+
+        if (defined('Doctrine\\DBAL\\Types\\Type::BINARY')) {
+            $column->binary(43);
+            $this->assertSame(Type::getType(Type::BINARY), $dbalColumn->getType());
+            $this->assertSame(43, $dbalColumn->getLength());
+            $this->assertSame(false, $dbalColumn->getFixed());
+        }
 
         if (defined('Doctrine\\DBAL\\Types\\Type::DATE_IMMUTABLE')) {
             // Doctrine DBAL 2.6+

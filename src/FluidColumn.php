@@ -96,6 +96,13 @@ class FluidColumn
         return $this->getOptions();
     }
 
+    /**
+     * From Doctrine DBAL 2.4+.
+     *
+     * @param null|string $length
+     * @param bool $fixed
+     * @return FluidColumnOptions
+     */
     public function binary(?string $length = null, bool $fixed = false): FluidColumnOptions
     {
         $this->column->setType(Type::getType(Type::BINARY));
