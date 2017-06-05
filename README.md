@@ -1,3 +1,11 @@
+[![Latest Stable Version](https://poser.pugx.org/thecodingmachine/dbal-fluid-schema-builder/v/stable)](https://packagist.org/packages/thecodingmachine/dbal-fluid-schema-builder)
+[![Total Downloads](https://poser.pugx.org/thecodingmachine/dbal-fluid-schema-builder/downloads)](https://packagist.org/packages/thecodingmachine/dbal-fluid-schema-builder)
+[![Latest Unstable Version](https://poser.pugx.org/thecodingmachine/dbal-fluid-schema-builder/v/unstable)](https://packagist.org/packages/thecodingmachine/dbal-fluid-schema-builder)
+[![License](https://poser.pugx.org/thecodingmachine/dbal-fluid-schema-builder/license)](https://packagist.org/packages/thecodingmachine/dbal-fluid-schema-builder)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/thecodingmachine/dbal-fluid-schema-builder/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/thecodingmachine/dbal-fluid-schema-builder/?branch=master)
+[![Build Status](https://travis-ci.org/thecodingmachine/dbal-fluid-schema-builder.svg?branch=master)](https://travis-ci.org/thecodingmachine/dbal-fluid-schema-builder)
+[![Coverage Status](https://coveralls.io/repos/thecodingmachine/dbal-fluid-schema-builder/badge.svg?branch=master&service=github)](https://coveralls.io/github/thecodingmachine/dbal-fluid-schema-builder?branch=master)
+
 # Fluid schema builder for Doctrine DBAL
 
 Build and modify your database schema using DBAL and a fluid syntax.
