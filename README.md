@@ -8,11 +8,14 @@
 
 # Fluid schema builder for Doctrine DBAL
 
-Build and modify your database schema using DBAL and a fluid syntax.
+Build and modify your database schema using [DBAL](http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/schema-representation.html) and a fluid syntax.
 
 ![Screencast](doc/images/screencast.gif)
 
 ## Why?
+
+Doctrine DBAL provides a powerful API to alter your database schema.
+This library is a wrapper around the DBAL standard API to provide a shorter, quicker syntax for day-to-day use. It provides shortcuts and syntactic sugars to make you efficient.
 
 ### IDE friendly
 
