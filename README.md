@@ -136,6 +136,9 @@ $table->column('description')->string(50)->null();
 $table->column('country_id')->references('countries');
 ```
 
+**Note:** The foreign key will be automatically created on the primary table of the table "countries".
+The type of the "country_id" column will be exactly the same as the type of the primary key of the "countries" table.
+
 **Create a jointure table (aka associative table) between 2 tables:**
 
 ```php
