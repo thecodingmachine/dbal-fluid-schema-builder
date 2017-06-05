@@ -48,6 +48,18 @@ class FluidTableTest extends TestCase
         $this->assertCount(1, $schema->getTable('posts')->getIndexes());
     }
 
+    public function testUnique()
+    {
+        $schema = new Schema();
+        $fluid = new FluidSchema($schema);
+
+        $posts = $fluid->table('posts');
+
+        $posts->column('foo')->integer()->then()->unique(['foo']);
+
+        $this->assertCount(1, $schema->getTable('posts')->getIndexes());
+    }
+
     public function testPrimaryKey()
     {
         $schema = new Schema();

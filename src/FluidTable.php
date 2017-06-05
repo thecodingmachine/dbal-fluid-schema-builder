@@ -52,6 +52,12 @@ class FluidTable
         return $this;
     }
 
+    public function unique(array $columnNames): FluidTable
+    {
+        $this->table->addUniqueIndex($columnNames);
+        return $this;
+    }
+
     public function primaryKey(array $columnNames, ?string $indexName = null): FluidTable
     {
         $newIndexName = $indexName ?: false;

@@ -18,7 +18,7 @@ For instance, each database type is a PHP method, so no typos anymore in the col
 ## Why not?
 
 The fluid schema builders aims at solving the cases you encounter in 99% of your schemas in a concise way.
-It does not cover the whole possible columns and there is no aim to target that goal.
+It does not cover the whole possible use cases and there is no aim to target that goal.
 
 For instance, if you have foreign keys on several columns, you cannot use `FluidSchema`. You should fallback to classic DBAL.
 
@@ -121,7 +121,7 @@ $table->index(['category1', 'category2']);
 $table->column('login')->string(50)->unique();
 
 // Or on the table object (if there are several columns to add to the constraint):
-$table->index(['login', 'status']);
+$table->unique(['login', 'status']);
 ```
 
 **Make a column nullable:**
