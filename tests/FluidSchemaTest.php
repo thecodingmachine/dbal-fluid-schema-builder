@@ -2,7 +2,6 @@
 
 namespace TheCodingMachine\FluidSchema;
 
-
 use Doctrine\DBAL\Schema\Schema;
 use PHPUnit\Framework\TestCase;
 

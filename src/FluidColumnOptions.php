@@ -3,7 +3,6 @@
 
 namespace TheCodingMachine\FluidSchema;
 
-
 use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Types\Type;
 
@@ -105,5 +104,4 @@ class FluidColumnOptions
     {
         return $this->fluidTable->column($name);
     }
-
 }
