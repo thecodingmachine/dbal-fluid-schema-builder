@@ -3,7 +3,6 @@
 
 namespace TheCodingMachine\FluidSchema;
 
-
 use Doctrine\Common\Inflector\Inflector;
 
 class DefaultNamingStrategy implements NamingStrategyInterface

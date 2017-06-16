@@ -77,5 +77,4 @@ class FluidSchema
     {
         return $this->schema;
     }
-
 }

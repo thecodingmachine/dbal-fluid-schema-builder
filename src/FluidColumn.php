@@ -3,7 +3,6 @@
 
 namespace TheCodingMachine\FluidSchema;
 
-
 use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Types\Type;
