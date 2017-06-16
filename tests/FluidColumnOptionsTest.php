@@ -35,6 +35,9 @@ class FluidColumnOptionsTest extends TestCase
         $columnOptions->autoIncrement();
         $this->assertSame(true, $dbalColumn->getAutoincrement());
 
+        $columnOptions->default(42);
+        $this->assertSame(42, $dbalColumn->getDefault());
+
         $this->assertSame($posts, $columnOptions->then());
 
         $columnOptions->column('bar');

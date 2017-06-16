@@ -90,6 +90,12 @@ class FluidColumnOptions
         return $this;
     }
 
+    public function default($defaultValue): FluidColumnOptions
+    {
+        $this->column->setDefault($defaultValue);
+        return $this;
+    }
+
     public function then(): FluidTable
     {
         return $this->fluidTable;

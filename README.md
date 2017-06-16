@@ -141,6 +141,12 @@ $table->unique(['login', 'status']);
 $table->column('description')->string(50)->null();
 ```
 
+**Set the default value of a column:**
+
+```php
+$table->column('enabled')->bool()->default(true);
+```
+
 **Create a foreign key**
 
 ```php
