@@ -99,4 +99,21 @@ class FluidTable
         $this->column('updated_at')->datetimeImmutable();
         return $this;
     }
+
+    public function extends(string $tableName): FluidTable
+    {
+        $inheritedTable = $this->schema->getDbalSchema()->getTable($tableName);
+
+        $pks = $inheritedTable->getPrimaryKeyColumns();
+
+        if (count($pks) > 1) {
+            throw new FluidSchemaException('You cannot inherit from a table with a primary key on several columns using FluidSchema. Use DBAL Schema methods instead.');
+        }
+
+        $pkName = $pks[0];
+        $pk = $inheritedTable->getColumn($pkName);
+
+        $this->column($pk->getName())->references($tableName)->primaryKey();
+        return $this;
+    }
 }

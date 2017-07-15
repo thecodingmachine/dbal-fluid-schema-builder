@@ -116,6 +116,27 @@ class FluidTableTest extends TestCase
         }
     }
 
+    public function testInherits()
+    {
+        $schema = new Schema();
+        $fluid = new FluidSchema($schema);
+
+        $contacts = $fluid->table('contacts');
+        $contacts->id();
+
+        $fluid->table('users')->extends('contacts');
+
+        $dbalColumn = $schema->getTable('users')->getColumn('id');
+
+        $this->assertSame(Type::getType(Type::INTEGER), $dbalColumn->getType());
+        $fks = $schema->getTable('users')->getForeignKeys();
+        $this->assertCount(1, $fks);
+        $fk = array_pop($fks);
+        $this->assertSame('users', $fk->getLocalTableName());
+        $this->assertSame('contacts', $fk->getForeignTableName());
+        $this->assertSame(['id'], $fk->getLocalColumns());
+    }
+
     public function testGetDbalSchema()
     {
         $schema = new Schema();
