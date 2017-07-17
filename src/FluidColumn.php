@@ -217,7 +217,7 @@ class FluidColumn
         $referencedColumns = $table->getPrimaryKeyColumns();
 
         if (count($referencedColumns) > 1) {
-            throw new FluidSchemaException('You cannot reference a table with a premiray key on several columns using FluidSchema. Use DBAL Schema methods instead.');
+            throw new FluidSchemaException('You cannot reference a table with a primary key on several columns using FluidSchema. Use DBAL Schema methods instead.');
         }
 
         $referencedColumnName = $referencedColumns[0];

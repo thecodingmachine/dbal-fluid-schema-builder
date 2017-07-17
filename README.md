@@ -182,3 +182,21 @@ $table->column('uuid')->string(36)->primaryKey();
 $table->column('uuid')->then()
       ->primaryKey(['uuid']);
 ```
+
+**Declare an inheritance relationship between 2 tables:**
+
+In SQL, there is no notion of "inheritance" like with PHP objects.
+However, a common way to model inheritance is to write one table for the base class (containing the base columns/properties) and then one table per extended class containing the additional columns/properties.
+Each extended table has **a primary key that is also a foreign key pointing to the base table**.
+
+```php
+$db->table('contacts')
+   ->id()
+   ->column('email')->string(50);
+
+$db->table('users')
+   ->extends('contacts')
+   ->column('password')->string(50);
+```
+
+The `extends` method will automatically create a primary key with the same name and same type as the extended table. It will also make sure this primary key is a foreign key pointing to the extended table.
