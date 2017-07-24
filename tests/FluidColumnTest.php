@@ -97,7 +97,7 @@ class FluidColumnTest extends TestCase
             $column->datetimeTzImmutable();
             $this->assertSame(Type::getType(Type::DATETIMETZ_IMMUTABLE), $dbalColumn->getType());
 
-            $column->time();
+            $column->timeImmutable();
             $this->assertSame(Type::getType(Type::TIME_IMMUTABLE), $dbalColumn->getType());
 
             $column->dateInterval();
