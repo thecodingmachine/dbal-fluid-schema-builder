@@ -34,6 +34,8 @@ class FluidSchema
 
     public function table(string $name): FluidTable
     {
+        $name = $this->namingStrategy->quoteIdentifier($name);
+
         if (isset($this->fluidTables[$name])) {
             return $this->fluidTables[$name];
         }
@@ -44,7 +46,7 @@ class FluidSchema
             $table = $this->schema->createTable($name);
         }
 
-        $this->fluidTables[$name] = new FluidTable($this, $table);
+        $this->fluidTables[$name] = new FluidTable($this, $table, $this->namingStrategy);
         return $this->fluidTables[$name];
     }
 

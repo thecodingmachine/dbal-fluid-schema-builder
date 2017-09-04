@@ -200,3 +200,24 @@ $db->table('users')
 ```
 
 The `extends` method will automatically create a primary key with the same name and same type as the extended table. It will also make sure this primary key is a foreign key pointing to the extended table.
+
+## Automatic 'quoting' of table and column names
+
+By default, the fluid-schema-builder will **not** quote your identifiers (because it does not know what database you use).
+
+This means that you cannot create an item with a reserved keyword.
+
+```php
+$db->table('contacts')
+   ->id()
+   ->column('date')->datetime(); // Will most likely fail, because "date" is a reserved keyword!
+```
+
+However, if you give to *fluid-schema-builder* your database platform at build time, then it **will quote all identifiers by default**. No more nasty surprises!
+
+```php
+use TheCodingMachine\FluidSchema\DefaultNamingStrategy;
+
+// Assuming $connection is your DBAL connection
+$db = new FluidSchema($schema, new DefaultNamingStrategy($connection->getDatabasePlatform()));
+```

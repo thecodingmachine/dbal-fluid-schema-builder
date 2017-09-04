@@ -20,4 +20,12 @@ interface NamingStrategyInterface
      * @return string
      */
     public function getForeignKeyColumnName(string $targetTable): string;
+
+    /**
+     * Decides to quote an identifier (or not) and returns the result.
+     *
+     * @param string $identifier
+     * @return string
+     */
+    public function quoteIdentifier(string $identifier): string;
 }

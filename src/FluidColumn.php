@@ -25,6 +25,10 @@ class FluidColumn
      * @var Table
      */
     private $table;
+    /**
+     * @var NamingStrategyInterface
+     */
+    private $namingStrategy;
 
     /**
      * FluidColumn constructor.
@@ -33,12 +37,13 @@ class FluidColumn
      * @param Table $table
      * @param Column $column
      */
-    public function __construct(FluidSchema $fluidSchema, FluidTable $fluidTable, Table $table, Column $column)
+    public function __construct(FluidSchema $fluidSchema, FluidTable $fluidTable, Table $table, Column $column, NamingStrategyInterface $namingStrategy)
     {
         $this->fluidSchema = $fluidSchema;
         $this->fluidTable = $fluidTable;
         $this->column = $column;
         $this->table = $table;
+        $this->namingStrategy = $namingStrategy;
     }
 
     public function integer(): FluidColumnOptions
@@ -208,6 +213,8 @@ class FluidColumn
 
     public function references(string $tableName, ?string $constraintName = null, string $onUpdate = 'RESTRICT', string $onDelete = 'RESTRICT'): FluidColumnOptions
     {
+        $tableName = $this->namingStrategy->quoteIdentifier($tableName);
+
         $table = $this->fluidSchema->getDbalSchema()->getTable($tableName);
 
         $referencedColumns = $table->getPrimaryKeyColumns();
@@ -216,7 +223,7 @@ class FluidColumn
             throw new FluidSchemaException('You cannot reference a table with a primary key on several columns using FluidSchema. Use DBAL Schema methods instead.');
         }
 
-        $referencedColumnName = $referencedColumns[0];
+        $referencedColumnName = $this->namingStrategy->quoteIdentifier($referencedColumns[0]);
         $referencedColumn = $table->getColumn($referencedColumnName);
 
         $this->column->setType($referencedColumn->getType());
@@ -226,7 +233,7 @@ class FluidColumn
         $this->column->setPrecision($referencedColumn->getPrecision());
         $this->column->setUnsigned($referencedColumn->getUnsigned());
 
-        $this->table->addForeignKeyConstraint($table, [$this->column->getName()], $referencedColumns, [
+        $this->table->addForeignKeyConstraint($table, [$this->namingStrategy->quoteIdentifier($this->column->getName())], $referencedColumns, [
             'onUpdate' => $onUpdate,
             'onDelete' => $onDelete
         ], $constraintName);
@@ -235,6 +242,6 @@ class FluidColumn
 
     private function getOptions(): FluidColumnOptions
     {
-        return new FluidColumnOptions($this->fluidTable, $this->column);
+        return new FluidColumnOptions($this->fluidTable, $this->column, $this->namingStrategy);
     }
 }
