@@ -4,9 +4,20 @@
 namespace TheCodingMachine\FluidSchema;
 
 use Doctrine\Common\Inflector\Inflector;
+use Doctrine\DBAL\Platforms\AbstractPlatform;
 
 class DefaultNamingStrategy implements NamingStrategyInterface
 {
+    /**
+     * @var AbstractPlatform
+     */
+    private $platform;
+
+    public function __construct(AbstractPlatform $platform = null)
+    {
+        $this->platform = $platform;
+    }
+
     /**
      * Returns the name of the jointure table from the name of the joined tables.
      *
@@ -47,5 +58,16 @@ class DefaultNamingStrategy implements NamingStrategyInterface
         }
 
         return implode('_', $strs);
+    }
+
+    /**
+     * Let's quote if a database platform has been provided to us!
+     *
+     * @param string $identifier
+     * @return string
+     */
+    public function quoteIdentifier(string $identifier): string
+    {
+        return ($this->platform !== null) ? $this->platform->quoteIdentifier($identifier) : $identifier;
     }
 }

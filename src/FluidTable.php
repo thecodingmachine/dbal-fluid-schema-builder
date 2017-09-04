@@ -19,19 +19,26 @@ class FluidTable
      * @var FluidColumn[]
      */
     private $fluidColumns;
+    /**
+     * @var NamingStrategyInterface
+     */
+    private $namingStrategy;
 
     /**
      * @param FluidSchema $schema
      * @param Table $table
      */
-    public function __construct(FluidSchema $schema, Table $table)
+    public function __construct(FluidSchema $schema, Table $table, NamingStrategyInterface $namingStrategy)
     {
         $this->schema = $schema;
         $this->table = $table;
+        $this->namingStrategy = $namingStrategy;
     }
 
     public function column(string $name): FluidColumn
     {
+        $name = $this->namingStrategy->quoteIdentifier($name);
+
         if (isset($this->fluidColumns[$name])) {
             return $this->fluidColumns[$name];
         }
@@ -42,19 +49,19 @@ class FluidTable
             $column = $this->table->addColumn($name, 'string');
         }
 
-        $this->fluidColumns[$name] = new FluidColumn($this->schema, $this, $this->table, $column);
+        $this->fluidColumns[$name] = new FluidColumn($this->schema, $this, $this->table, $column, $this->namingStrategy);
         return $this->fluidColumns[$name];
     }
 
     public function index(array $columnNames): FluidTable
     {
-        $this->table->addIndex($columnNames);
+        $this->table->addIndex($this->quoteArray($columnNames));
         return $this;
     }
 
     public function unique(array $columnNames): FluidTable
     {
-        $this->table->addUniqueIndex($columnNames);
+        $this->table->addUniqueIndex($this->quoteArray($columnNames));
         return $this;
     }
 
@@ -62,8 +69,13 @@ class FluidTable
     {
         $newIndexName = $indexName ?: false;
 
-        $this->table->setPrimaryKey($columnNames, $newIndexName);
+        $this->table->setPrimaryKey($this->quoteArray($columnNames), $newIndexName);
         return $this;
+    }
+
+    private function quoteArray(array $columnNames): array
+    {
+        return array_map([$this->namingStrategy, 'quoteIdentifier'], $columnNames);
     }
 
     /**
@@ -102,6 +114,8 @@ class FluidTable
 
     public function extends(string $tableName): FluidTable
     {
+        $tableName = $this->namingStrategy->quoteIdentifier($tableName);
+
         $inheritedTable = $this->schema->getDbalSchema()->getTable($tableName);
 
         $pks = $inheritedTable->getPrimaryKeyColumns();

@@ -16,16 +16,21 @@ class FluidColumnOptions
      * @var Column
      */
     private $column;
+    /**
+     * @var NamingStrategyInterface
+     */
+    private $namingStrategy;
 
     /**
      * FluidColumn constructor.
      * @param FluidTable $fluidTable
      * @param Column $column
      */
-    public function __construct(FluidTable $fluidTable, Column $column)
+    public function __construct(FluidTable $fluidTable, Column $column, NamingStrategyInterface $namingStrategy)
     {
         $this->fluidTable = $fluidTable;
         $this->column = $column;
+        $this->namingStrategy = $namingStrategy;
     }
 
     /**
@@ -66,7 +71,7 @@ class FluidColumnOptions
      */
     public function index(): FluidColumnOptions
     {
-        $this->fluidTable->index([$this->column->getName()]);
+        $this->fluidTable->index([$this->namingStrategy->quoteIdentifier($this->column->getName())]);
         return $this;
     }
     public function comment(string $comment): FluidColumnOptions
@@ -85,7 +90,7 @@ class FluidColumnOptions
     {
         $newIndexName = $indexName ?: false;
 
-        $this->fluidTable->primaryKey([$this->column->getName()], $newIndexName);
+        $this->fluidTable->primaryKey([$this->namingStrategy->quoteIdentifier($this->column->getName())], $newIndexName);
         return $this;
     }
 
