@@ -159,7 +159,7 @@ The type of the "country_id" column will be exactly the same as the type of the 
 **Create a jointure table (aka associative table) between 2 tables:**
 
 ```php
-$db->jointureTable('users', 'roles');
+$db->junctionTable('users', 'roles');
 
 // This will create a 'users_roles' table with 2 foreign keys:
 //  - 'user_id' pointing on the PK of 'users'
