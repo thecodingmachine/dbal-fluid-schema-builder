@@ -130,4 +130,13 @@ class FluidTable
         $this->column($pk->getName())->references($tableName)->primaryKey();
         return $this;
     }
+
+    /**
+     * Returns the underlying DBAL table.
+     * @return Table
+     */
+    public function getDbalTable(): Table
+    {
+        return $this->table;
+    }
 }

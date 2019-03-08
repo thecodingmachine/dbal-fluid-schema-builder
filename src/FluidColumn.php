@@ -244,4 +244,13 @@ class FluidColumn
     {
         return new FluidColumnOptions($this->fluidTable, $this->column, $this->namingStrategy);
     }
+
+    /**
+     * Returns the underlying DBAL column.
+     * @return Column
+     */
+    public function getDbalColumn(): Column
+    {
+        return $this->column;
+    }
 }
