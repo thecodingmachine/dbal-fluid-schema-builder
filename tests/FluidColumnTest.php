@@ -97,6 +97,9 @@ class FluidColumnTest extends TestCase
             $column->datetimeTzImmutable();
             $this->assertSame(Type::getType(Type::DATETIMETZ_IMMUTABLE), $dbalColumn->getType());
 
+            $column->time();
+            $this->assertSame(Type::getType(Type::TIME), $dbalColumn->getType());
+
             $column->timeImmutable();
             $this->assertSame(Type::getType(Type::TIME_IMMUTABLE), $dbalColumn->getType());
 
@@ -106,6 +109,8 @@ class FluidColumnTest extends TestCase
             $column->json();
             $this->assertSame(Type::getType(Type::JSON), $dbalColumn->getType());
         }
+
+        $this->assertSame('foo', $column->getDbalColumn()->getName());
     }
 
     public function testReference()

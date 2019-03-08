@@ -44,4 +44,12 @@ class FluidSchemaTest extends TestCase
         $this->assertNotNull($schema->getTable('users_roles')->getColumn('user_id'));
         $this->assertNotNull($schema->getTable('users_roles')->getColumn('role_id'));
     }
+
+    public function testGetDbalSchema()
+    {
+        $schema = new Schema();
+        $fluid = new FluidSchema($schema);
+
+        $this->assertSame($schema, $fluid->getDbalSchema());
+    }
 }

@@ -137,11 +137,14 @@ class FluidTableTest extends TestCase
         $this->assertSame(['id'], $fk->getLocalColumns());
     }
 
-    public function testGetDbalSchema()
+    public function testGetDbalTable()
     {
         $schema = new Schema();
         $fluid = new FluidSchema($schema);
 
-        $this->assertSame($schema, $fluid->getDbalSchema());
+        $contacts = $fluid->table('contacts');
+        $this->assertSame('contacts', $contacts->getDbalTable()->getName());
     }
+
+
 }
