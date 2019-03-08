@@ -145,6 +145,4 @@ class FluidTableTest extends TestCase
         $contacts = $fluid->table('contacts');
         $this->assertSame('contacts', $contacts->getDbalTable()->getName());
     }
-
-
 }
