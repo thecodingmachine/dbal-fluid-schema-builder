@@ -88,9 +88,10 @@ class FluidColumn
         return $this->getOptions();
     }
 
-    public function text(): FluidColumnOptions
+    public function text(?int $length = null): FluidColumnOptions
     {
         $this->column->setType(Type::getType(Type::TEXT));
+        $this->column->setLength($length);
         return $this->getOptions();
     }
 
