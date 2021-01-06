@@ -26,8 +26,8 @@ class FluidColumnOptionsTest extends TestCase
         $columnOptions->notNull();
         $this->assertSame(true, $dbalColumn->getNotnull());
 
-        $columnOptions->unique();
-        $this->assertSame(true, $dbalColumn->getCustomSchemaOption('unique'));
+        $columnOptions->unique('unique_foo');
+        $this->assertSame(true, $posts->getDbalTable()->getIndex('unique_foo')->isUnique());
 
         $columnOptions->comment('foo');
         $this->assertSame('foo', $dbalColumn->getComment());
