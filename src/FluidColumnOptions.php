@@ -58,9 +58,9 @@ class FluidColumnOptions
      *
      * @return FluidColumnOptions
      */
-    public function unique(?string $indexName = null): FluidColumnOptions
+    public function unique(): FluidColumnOptions
     {
-        $this->fluidTable->unique([$this->namingStrategy->quoteIdentifier($this->column->getName())], $indexName);
+        $this->column->setCustomSchemaOption('unique', true);
         return $this;
     }
 
