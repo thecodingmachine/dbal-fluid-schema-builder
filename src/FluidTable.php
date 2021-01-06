@@ -53,15 +53,15 @@ class FluidTable
         return $this->fluidColumns[$name];
     }
 
-    public function index(array $columnNames): FluidTable
+    public function index(array $columnNames, ?string $indexName = null): FluidTable
     {
-        $this->table->addIndex($this->quoteArray($columnNames));
+        $this->table->addIndex($this->quoteArray($columnNames), $indexName);
         return $this;
     }
 
-    public function unique(array $columnNames): FluidTable
+    public function unique(array $columnNames, ?string $indexName = null): FluidTable
     {
-        $this->table->addUniqueIndex($this->quoteArray($columnNames));
+        $this->table->addUniqueIndex($this->quoteArray($columnNames), $indexName);
         return $this;
     }
 

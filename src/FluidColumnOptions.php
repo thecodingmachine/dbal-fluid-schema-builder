@@ -58,9 +58,9 @@ class FluidColumnOptions
      *
      * @return FluidColumnOptions
      */
-    public function unique(): FluidColumnOptions
+    public function unique(?string $indexName = null): FluidColumnOptions
     {
-        $this->column->setCustomSchemaOption('unique', true);
+        $this->fluidTable->unique([$this->namingStrategy->quoteIdentifier($this->column->getName())], $indexName);
         return $this;
     }
 
@@ -69,9 +69,9 @@ class FluidColumnOptions
      *
      * @return FluidColumnOptions
      */
-    public function index(): FluidColumnOptions
+    public function index(?string $indexName = null): FluidColumnOptions
     {
-        $this->fluidTable->index([$this->namingStrategy->quoteIdentifier($this->column->getName())]);
+        $this->fluidTable->index([$this->namingStrategy->quoteIdentifier($this->column->getName())], $indexName);
         return $this;
     }
     public function comment(string $comment): FluidColumnOptions
