@@ -3,8 +3,9 @@
 
 namespace TheCodingMachine\FluidSchema;
 
-use Doctrine\Common\Inflector\Inflector;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\Inflector\Inflector;
+use Doctrine\Inflector\InflectorFactory;
 
 class DefaultNamingStrategy implements NamingStrategyInterface
 {
@@ -12,10 +13,15 @@ class DefaultNamingStrategy implements NamingStrategyInterface
      * @var AbstractPlatform
      */
     private $platform;
+    /**
+     * @var Inflector
+     */
+    private $inflector;
 
     public function __construct(AbstractPlatform $platform = null)
     {
         $this->platform = $platform;
+        $this->inflector = InflectorFactory::create()->build();
     }
 
     /**
@@ -54,7 +60,7 @@ class DefaultNamingStrategy implements NamingStrategyInterface
 
         $strs = [];
         foreach ($tokens as $token) {
-            $strs[] = Inflector::singularize($token);
+            $strs[] = $this->inflector->singularize($token);
         }
 
         return implode('_', $strs);
