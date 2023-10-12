@@ -11,7 +11,7 @@
     "require": {
         "php": ">=7.1",
         "doctrine/dbal": "^2.3",
-        "doctrine/inflector": "^1.0"
+        "doctrine/inflector": "^1.4.3 || ^2"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.1",
