@@ -1,0 +1,54 @@
+name: "Continuous Integration"
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+jobs:
+  test:
+    name: "Test"
+    runs-on: "ubuntu-latest"
+
+    strategy:
+      matrix:
+        php-version:
+          # PHPUnit v10 needs PHP 8.1, hence no way to test on older php versions
+          - "8.1"
+          - "8.2"
+          - "8.3"
+        dependencies:
+          - "lowest"
+          - "highest"
+        exclude:
+          # Exclude lowest deps version as they don't support newer php versions
+          - dependencies: "lowest"
+            php-version: "8.3"
+          - dependencies: "lowest"
+            php-version: "8.2"
+          - dependencies: "lowest"
+            php-version: "8.1"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          coverage: "xdebug"
+          php-version: "${{ matrix.php-version }}"
+          ini-values: "zend.assertions=1"
+
+      - uses: "ramsey/composer-install@v2"
+        with:
+          dependency-versions: "${{ matrix.dependencies }}"
+
+      - name: "Run PHPUnit"
+        run: "vendor/bin/phpunit -c phpunit.xml.dist"
+
+      - name: Upload coverage results to Coveralls
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          vendor/bin/php-coveralls --coverage_clover=build/logs/clover.xml -v
