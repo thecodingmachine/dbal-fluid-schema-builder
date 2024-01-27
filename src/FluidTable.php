@@ -118,7 +118,7 @@ class FluidTable
 
         $inheritedTable = $this->schema->getDbalSchema()->getTable($tableName);
 
-        $pks = $inheritedTable->getPrimaryKeyColumns();
+        $pks = $inheritedTable->getPrimaryKey()->getColumns();
 
         if (count($pks) > 1) {
             throw new FluidSchemaException('You cannot inherit from a table with a primary key on several columns using FluidSchema. Use DBAL Schema methods instead.');

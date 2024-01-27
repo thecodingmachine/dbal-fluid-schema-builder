@@ -4,6 +4,7 @@ namespace TheCodingMachine\FluidSchema;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use PHPUnit\Framework\TestCase;
 
 class FluidTableTest extends TestCase
@@ -33,7 +34,7 @@ class FluidTableTest extends TestCase
 
         $posts->column('foo')->integer();
 
-        $this->assertSame(Type::getType(Type::INTEGER), $schema->getTable('posts')->getColumn('foo')->getType());
+        $this->assertSame(Type::getType(Types::INTEGER), $schema->getTable('posts')->getColumn('foo')->getType());
     }
 
     public function testIndex()
@@ -82,7 +83,7 @@ class FluidTableTest extends TestCase
 
         $posts->id();
 
-        $this->assertTrue($schema->getTable('posts')->hasPrimaryKey());
+        $this->assertNotNull($schema->getTable('posts')->getPrimaryKey());
         $this->assertTrue($schema->getTable('posts')->hasColumn('id'));
     }
 
@@ -95,13 +96,13 @@ class FluidTableTest extends TestCase
 
         $posts->uuid();
 
-        $this->assertTrue($schema->getTable('posts')->hasPrimaryKey());
+        $this->assertNotNull($schema->getTable('posts')->getPrimaryKey());
         $this->assertTrue($schema->getTable('posts')->hasColumn('uuid'));
     }
 
     public function testTimestamps()
     {
-        if (defined('Doctrine\\DBAL\\Types\\Type::DATE_IMMUTABLE')) {
+        if (defined('Doctrine\\DBAL\\Types\\Types::DATE_IMMUTABLE')) {
             $schema = new Schema();
             $fluid = new FluidSchema($schema);
 
@@ -128,7 +129,7 @@ class FluidTableTest extends TestCase
 
         $dbalColumn = $schema->getTable('users')->getColumn('id');
 
-        $this->assertSame(Type::getType(Type::INTEGER), $dbalColumn->getType());
+        $this->assertSame(Type::getType(Types::INTEGER), $dbalColumn->getType());
         $fks = $schema->getTable('users')->getForeignKeys();
         $this->assertCount(1, $fks);
         $fk = array_pop($fks);
