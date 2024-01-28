@@ -20,14 +20,6 @@ jobs:
         dependencies:
           - "lowest"
           - "highest"
-        exclude:
-          # Exclude lowest deps version as they don't support newer php versions
-          - dependencies: "lowest"
-            php-version: "8.3"
-          - dependencies: "lowest"
-            php-version: "8.2"
-          - dependencies: "lowest"
-            php-version: "8.1"
 
     steps:
       - name: "Checkout"
@@ -48,6 +40,9 @@ jobs:
         run: "vendor/bin/phpunit -c phpunit.xml.dist"
 
       - name: Upload coverage results to Coveralls
+        # skip php-coversalls for lowest deps
+        # it fails on lowest depedencies because old versions of guzzle doesn't work well with newer php versions
+        if: "${{ 'highest' == matrix.dependencies }}"
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
