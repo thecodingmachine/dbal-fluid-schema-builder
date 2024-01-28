@@ -80,36 +80,31 @@ class FluidColumnTest extends TestCase
         $column->object();
         $this->assertSame(Type::getType(Types::OBJECT), $dbalColumn->getType());
 
-        if (defined('Doctrine\\DBAL\\Types\\Types::BINARY')) {
-            $column->binary(43);
-            $this->assertSame(Type::getType(Types::BINARY), $dbalColumn->getType());
-            $this->assertSame(43, $dbalColumn->getLength());
-            $this->assertSame(false, $dbalColumn->getFixed());
-        }
+        $column->binary(43);
+        $this->assertSame(Type::getType(Types::BINARY), $dbalColumn->getType());
+        $this->assertSame(43, $dbalColumn->getLength());
+        $this->assertSame(false, $dbalColumn->getFixed());
 
-        if (defined('Doctrine\\DBAL\\Types\\Types::DATE_IMMUTABLE')) {
-            // Doctrine DBAL 2.6+
-            $column->dateImmutable();
-            $this->assertSame(Type::getType('date_immutable'), $dbalColumn->getType());
+        $column->dateImmutable();
+        $this->assertSame(Type::getType('date_immutable'), $dbalColumn->getType());
 
-            $column->datetimeImmutable();
-            $this->assertSame(Type::getType(Types::DATETIME_IMMUTABLE), $dbalColumn->getType());
+        $column->datetimeImmutable();
+        $this->assertSame(Type::getType(Types::DATETIME_IMMUTABLE), $dbalColumn->getType());
 
-            $column->datetimeTzImmutable();
-            $this->assertSame(Type::getType(Types::DATETIMETZ_IMMUTABLE), $dbalColumn->getType());
+        $column->datetimeTzImmutable();
+        $this->assertSame(Type::getType(Types::DATETIMETZ_IMMUTABLE), $dbalColumn->getType());
 
-            $column->time();
-            $this->assertSame(Type::getType(Types::TIME_MUTABLE), $dbalColumn->getType());
+        $column->time();
+        $this->assertSame(Type::getType(Types::TIME_MUTABLE), $dbalColumn->getType());
 
-            $column->timeImmutable();
-            $this->assertSame(Type::getType(Types::TIME_IMMUTABLE), $dbalColumn->getType());
+        $column->timeImmutable();
+        $this->assertSame(Type::getType(Types::TIME_IMMUTABLE), $dbalColumn->getType());
 
-            $column->dateInterval();
-            $this->assertSame(Type::getType(Types::DATEINTERVAL), $dbalColumn->getType());
+        $column->dateInterval();
+        $this->assertSame(Type::getType(Types::DATEINTERVAL), $dbalColumn->getType());
 
-            $column->json();
-            $this->assertSame(Type::getType(Types::JSON), $dbalColumn->getType());
-        }
+        $column->json();
+        $this->assertSame(Type::getType(Types::JSON), $dbalColumn->getType());
 
         $this->assertSame('foo', $column->getDbalColumn()->getName());
     }
