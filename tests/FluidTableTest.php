@@ -102,19 +102,15 @@ class FluidTableTest extends TestCase
 
     public function testTimestamps()
     {
-        if (defined('Doctrine\\DBAL\\Types\\Types::DATE_IMMUTABLE')) {
-            $schema = new Schema();
-            $fluid = new FluidSchema($schema);
+        $schema = new Schema();
+        $fluid = new FluidSchema($schema);
 
-            $posts = $fluid->table('posts');
+        $posts = $fluid->table('posts');
 
-            $posts->timestamps();
+        $posts->timestamps();
 
-            $this->assertTrue($schema->getTable('posts')->hasColumn('created_at'));
-            $this->assertTrue($schema->getTable('posts')->hasColumn('updated_at'));
-        } else {
-            $this->markTestSkipped("Only available from Doctrine DBAL 2.6");
-        }
+        $this->assertTrue($schema->getTable('posts')->hasColumn('created_at'));
+        $this->assertTrue($schema->getTable('posts')->hasColumn('updated_at'));
     }
 
     public function testInherits()
@@ -136,6 +132,21 @@ class FluidTableTest extends TestCase
         $this->assertSame('users', $fk->getLocalTableName());
         $this->assertSame('contacts', $fk->getForeignTableName());
         $this->assertSame(['id'], $fk->getLocalColumns());
+    }
+
+    public function testCannotInheritFromATableWithMultiplePrimaryKeys()
+    {
+        $schema = new Schema();
+        $fluid = new FluidSchema($schema);
+
+        $contacts = $fluid->table('contacts');
+        $contacts->column('foo')->string();
+        $contacts->column('bar')->string();
+        $contacts->primaryKey(['foo', 'bar']);
+
+        $this->expectException(FluidSchemaException::class);
+
+        $fluid->table('users')->extends('contacts');
     }
 
     public function testGetDbalTable()
