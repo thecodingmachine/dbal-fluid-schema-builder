@@ -180,7 +180,7 @@ class FluidColumn
     }
 
     /**
-     * @depracated Use json() instead
+     * @deprecated Use json() instead
      */
     public function array(): FluidColumnOptions
     {
@@ -211,7 +211,7 @@ class FluidColumn
     }
 
     /**
-     * @depracated Use json() instead
+     * @deprecated Use json() instead
      */
     public function object(): FluidColumnOptions
     {
